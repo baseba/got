@@ -1,0 +1,13 @@
+package userView
+
+import ("github.com/baseba/got/view/layout"
+        "github.com/baseba/got/view/components"
+        "github.com/baseba/got/model"
+        )
+
+templ Show(user model.User) {
+    @layout.Base() {
+        <h1> hello from the user page { user.Email } </h1>
+        @components.Input("email", "name")
+    }
+}
