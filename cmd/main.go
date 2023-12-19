@@ -1,53 +1,163 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
+	"log"
+	"os"
+	"strconv"
 
 	"github.com/baseba/got/handler"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Album struct {
-	ID     int64
-	Title  string
-	Artist string
-	Price  float32
+type RoomData struct {
+	ID    int64
+	Money int
+	Count int
 }
 
 var db *sql.DB
 
 func main() {
-	// Capture connection properties.
-	// Get a database handle.
-	// var err error
-	// db, err = sql.Open("mysql", "(https://pokeslots-baseba.turso.io)/pokeslots?token=eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIyMDIzLTEyLTE5VDA3OjMyOjUzLjU1NjE3NzA5OVoiLCJpZCI6ImZkNzlmM2YyLTllM2QtMTFlZS1iNTk2LTEyYWIwZGY3MGIxZiJ9.FZAaaz6hXlsamztLiQZ19XEbdJZOLE9xcf1HWIJIzpeulJxTZPDunXrNami39PKYx3jVDmP-DP0BZGMhsRK6Aw")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// pingErr := db.Ping()
-	// if pingErr != nil {
-	// 	log.Fatal(pingErr)
-	// }
-	// fmt.Println("Connected!")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(".env file could not be loaded")
+	}
+	username := os.Getenv("USERNAME")
+	password := os.Getenv("PASSWORD")
+	fmt.Println(username)
+	URI := fmt.Sprintf("mongodb+srv://%s:%s@pokeslots.ibl4gcl.mongodb.net/?retryWrites=true&w=majority", username, password)
+	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI(URI).SetServerAPIOptions(serverAPI)
+	// Create a new client and connect to the server
+	client, err := mongo.Connect(context.TODO(), opts)
+	if err != nil {
+		panic(err)
+	}
+	defer func() {
+		if err = client.Disconnect(context.TODO()); err != nil {
+			panic(err)
+		}
+	}()
+	// Send a ping to confirm a successful connection
+	if err := client.Database("admin").RunCommand(context.TODO(), bson.D{{"ping", 1}}).Err(); err != nil {
+		panic(err)
+	}
+	fmt.Println("Pinged your deployment. You successfully connected to MongoDB!")
 
 	app := echo.New()
-
+	var count int
+	var money int
 	userHandler := handler.UserHandler{}
 	app.GET("/user", userHandler.HandleUserShow)
 	slotsHandler := handler.SlotsHandler{}
-	app.GET("/slots/:money", slotsHandler.HandleSlotsShow)
+	app.GET("/slots/:room", slotsHandler.HandleSlotsShow)
 
 	app.POST("/win/:amount", func(c echo.Context) error {
-		fmt.Println("you win " + c.Param("amount") + " current money = " + c.Path())
-		return nil
+		count = 0
+		amount, _ := strconv.Atoi(c.Param("amount"))
+		room, _ := strconv.Atoi(c.QueryParam("room"))
+
+		// add data to the db
+		database := client.Database("pokeslots")
+		collection := database.Collection("rooms")
+		filter := bson.M{"id": room}
+
+		var result RoomData
+		err = collection.FindOne(context.TODO(), filter).Decode(&result)
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				fmt.Println("No matching document found.")
+			} else {
+				log.Fatal(err)
+			}
+		} else {
+			// Print the result
+			fmt.Printf("encontramos" + strconv.Itoa(result.Money))
+		}
+		money := result.Money + amount
+		count := 0
+		replacement := RoomData{
+			ID:    int64(room),
+			Count: count,
+			Money: money,
+		}
+		// Example: Perform the update or insert operation with upsert set to true
+		updateResult, err := collection.ReplaceOne(context.TODO(), filter, replacement, options.Replace().SetUpsert(true))
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("Matched %v document and modified %v document.\n", updateResult.MatchedCount, updateResult.ModifiedCount)
+
+		fmt.Println(c.Path())
+		res := fmt.Sprintf(`<p className="text-sm text-gray-500 mb-1">Perdidas Seguidas</p>
+		<p id="count" className="text-sm text-gray-500 mb-1">%d</p>
+		<p className="text-sm text-gray-500 mb-1">saldo</p>
+		<p id="money" className="text-lg text-black">%d</p>`, count, money)
+
+		return c.String(200, res)
 	})
 
 	app.POST("/lose/:amount", func(c echo.Context) error {
-		fmt.Println("you lost " + c.Param("amount"))
-		return nil
+		amount, _ := strconv.Atoi(c.Param("amount"))
+		room, _ := strconv.Atoi(c.QueryParam("room"))
+
+		// add data to the db
+		database := client.Database("pokeslots")
+		collection := database.Collection("rooms")
+		filter := bson.M{"id": room}
+
+		var result RoomData
+		err = collection.FindOne(context.TODO(), filter).Decode(&result)
+		if err != nil {
+			if err == mongo.ErrNoDocuments {
+				fmt.Println("No matching document found.")
+			} else {
+				log.Fatal(err)
+			}
+		} else {
+			// Print the result
+			fmt.Printf("encontramos" + strconv.Itoa(result.Money))
+		}
+		money := result.Money - amount
+		count := 0
+		replacement := RoomData{
+			ID:    int64(room),
+			Count: count,
+			Money: money,
+		}
+		// Example: Perform the update or insert operation with upsert set to true
+		updateResult, err := collection.ReplaceOne(context.TODO(), filter, replacement, options.Replace().SetUpsert(true))
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("Matched %v document and modified %v document.\n", updateResult.MatchedCount, updateResult.ModifiedCount)
+
+		fmt.Println(c.Path())
+		res := fmt.Sprintf(`<p className="text-sm text-gray-500 mb-1">Perdidas Seguidas</p>
+		<p id="count" className="text-sm text-gray-500 mb-1">%d</p>
+		<p className="text-sm text-gray-500 mb-1">saldo</p>
+		<p id="money" className="text-lg text-black">%d</p>`, count, money)
+
+		return c.String(200, res)
+	})
+
+	app.POST("/reset", func(c echo.Context) error {
+		count = 0
+		money = 0
+		res := fmt.Sprintf(`<p className="text-sm text-gray-500 mb-1">Perdidas Seguidas</p>
+		<p id="count" className="text-sm text-gray-500 mb-1">%d</p>
+		<p className="text-sm text-gray-500 mb-1">saldo</p>
+		<p id="money" className="text-lg text-black">%d</p>`, count, money)
+		return c.String(200, res)
 	})
 
 	app.Start(":3000") //envs?

@@ -8,9 +8,9 @@ import (
 type SlotsHandler struct{}
 
 func (h SlotsHandler) HandleSlotsShow(c echo.Context) error {
-	if c.Param("money") != "" {
+	if c.Param("room") != "" {
 
-		return render(c, slotView.Show(c.Param("money")))
+		return render(c, slotView.Show(c.Param("room")))
 	}
 	return render(c, slotView.Show("0"))
 }
