@@ -52,15 +52,13 @@ func main() {
 	fmt.Println("Pinged your deployment. You successfully connected to MongoDB!")
 
 	app := echo.New()
-	var count int
-	var money int
+
 	userHandler := handler.UserHandler{}
 	app.GET("/user", userHandler.HandleUserShow)
 	slotsHandler := handler.SlotsHandler{}
 	app.GET("/slots/:room", slotsHandler.HandleSlotsShow)
 
 	app.POST("/win/:amount", func(c echo.Context) error {
-		count = 0
 		amount, _ := strconv.Atoi(c.Param("amount"))
 		room, _ := strconv.Atoi(c.QueryParam("room"))
 
@@ -127,7 +125,7 @@ func main() {
 			fmt.Printf("encontramos" + strconv.Itoa(result.Money))
 		}
 		money := result.Money - amount
-		count := 0
+		count := result.Count + 1
 		replacement := RoomData{
 			ID:    int64(room),
 			Count: count,
@@ -150,13 +148,29 @@ func main() {
 		return c.String(200, res)
 	})
 
-	app.POST("/reset", func(c echo.Context) error {
-		count = 0
-		money = 0
+	app.POST("/reset/:room", func(c echo.Context) error {
+		room, _ := strconv.Atoi(c.QueryParam("room"))
+		database := client.Database("pokeslots")
+		collection := database.Collection("rooms")
+		filter := bson.M{"id": room}
+
+		replacement := RoomData{
+			ID:    int64(room),
+			Count: 0,
+			Money: 0,
+		}
+		// Example: Perform the update or insert operation with upsert set to true
+		updateResult, err := collection.ReplaceOne(context.TODO(), filter, replacement, options.Replace().SetUpsert(true))
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("Matched %v document and modified %v document.\n", updateResult.MatchedCount, updateResult.ModifiedCount)
+
 		res := fmt.Sprintf(`<p className="text-sm text-gray-500 mb-1">Perdidas Seguidas</p>
 		<p id="count" className="text-sm text-gray-500 mb-1">%d</p>
 		<p className="text-sm text-gray-500 mb-1">saldo</p>
-		<p id="money" className="text-lg text-black">%d</p>`, count, money)
+		<p id="money" className="text-lg text-black">%d</p>`, 0, 0)
 		return c.String(200, res)
 	})
 
