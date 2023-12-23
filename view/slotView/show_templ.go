@@ -257,7 +257,7 @@ func Show(room string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></div></div><div className=\"flex flex-col space-y-2 md:space-y-0 md:space-x-2 mt-4\"><div id=\"status\" className=\"bg-[#f3f4f6] p-4 rounded-md shadow-md\"><p className=\"text-sm text-gray-500 mb-1\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></div></div><div class=\"flex flex-col space-y-2 md:space-y-0 md:space-x-2 mt-4\"><div id=\"status\" class=\"bg-[#f3f4f6] p-4 rounded-md shadow-md\"><p class=\"text-sm text-gray-500 mb-1\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -266,7 +266,7 @@ func Show(room string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p id=\"count\" className=\"text-sm text-gray-500 mb-1\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p id=\"count\" class=\"text-sm text-gray-500 mb-1\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -275,7 +275,7 @@ func Show(room string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p className=\"text-sm text-gray-500 mb-1\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p class=\"text-sm text-gray-500 mb-1\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -284,7 +284,7 @@ func Show(room string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p id=\"money\" className=\"text-lg text-black\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><p id=\"money\" class=\"text-lg text-black\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -293,7 +293,16 @@ func Show(room string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div><button hx-post=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><h2>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Var21 := `nivel de calor de la maquina`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var21)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h2><div class=\"grid grid-cols-12 justify-start\"><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div><div class=\"bg-blue-600 p-6\"></div></div></div><button hx-post=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -305,8 +314,8 @@ func Show(room string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var21 := `RESET!`
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var21)
+			templ_7745c5c3_Var22 := `RESET!`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var22)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

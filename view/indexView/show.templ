@@ -1,0 +1,20 @@
+package indexView
+
+
+import (
+    "github.com/baseba/got/view/layout"
+    )
+templ Show() {
+    @layout.Base(){
+        <h1 class="text-xl">POKESLORS</h1>
+        <div class="flex justify-center">
+        <form hx-post="/go-to" class="flex flex-col max-w-64">
+            <h2>
+                Ingresa a una sala
+            </h2>
+            <input class="flex-auto border-2 border-black m-2" id="room" name="room" type="text" />
+            <button type="submit" class="bg-blue-500 m-2">Submit</button>
+        </form>
+        </div>
+    }
+}

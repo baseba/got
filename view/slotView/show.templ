@@ -52,12 +52,29 @@ templ Show(room string) {
                 </button>
             </div>
         </div>
-        <div className="flex flex-col space-y-2 md:space-y-0 md:space-x-2 mt-4">
-            <div id="status" className="bg-[#f3f4f6] p-4 rounded-md shadow-md">
-                <p className="text-sm text-gray-500 mb-1">Perdidas Seguidas</p>
-                <p id="count" className="text-sm text-gray-500 mb-1">0</p>
-                <p className="text-sm text-gray-500 mb-1">saldo</p>
-                <p id="money" className="text-lg text-black">0</p>
+        <div class="flex flex-col space-y-2 md:space-y-0 md:space-x-2 mt-4">
+            <div id="status" class="bg-[#f3f4f6] p-4 rounded-md shadow-md">
+                <p class="text-sm text-gray-500 mb-1">Perdidas Seguidas</p>
+                <p id="count" class="text-sm text-gray-500 mb-1">0</p>
+                <p class="text-sm text-gray-500 mb-1">saldo</p>
+                <p id="money" class="text-lg text-black">0</p>
+                <h2>
+                    nivel de calor de la maquina
+                </h2>
+                    <div class="grid grid-cols-12 justify-start">
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                        <div class="bg-blue-600 p-6"></div>
+                </div>
             </div>
             <button hx-post={fmt.Sprintf("/reset/%s", room)} hx-target="#status" class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-red-600 text-black hover:bg-red-500 h-10 px-4 py-2 w-full md:w-auto">
                 RESET!
