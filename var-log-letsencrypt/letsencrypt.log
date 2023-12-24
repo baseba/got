@@ -1,0 +1,227 @@
+2023-12-24 02:28:25,854:DEBUG:certbot._internal.main:certbot version: 2.7.4
+2023-12-24 02:28:25,854:DEBUG:certbot._internal.main:Location of certbot entry point: /usr/local/bin/certbot
+2023-12-24 02:28:25,854:DEBUG:certbot._internal.main:Arguments: ['-d', 'pokeslots.ladisco.tech', '--manual', '--preferred-challenges', 'dns', '--dry-run']
+2023-12-24 02:28:25,854:DEBUG:certbot._internal.main:Discovered plugins: PluginsRegistry(PluginEntryPoint#manual,PluginEntryPoint#null,PluginEntryPoint#standalone,PluginEntryPoint#webroot)
+2023-12-24 02:28:25,867:DEBUG:certbot._internal.log:Root logging level set at 30
+2023-12-24 02:28:25,868:DEBUG:certbot._internal.plugins.selection:Requested authenticator manual and installer None
+2023-12-24 02:28:25,868:DEBUG:certbot._internal.plugins.selection:Single candidate plugin: * manual
+Description: Manual configuration or run your own shell scripts
+Interfaces: Authenticator, Plugin
+Entry point: EntryPoint(name='manual', value='certbot._internal.plugins.manual:Authenticator', group='certbot.plugins')
+Initialized: <certbot._internal.plugins.manual.Authenticator object at 0x7fe6884a1360>
+Prep: True
+2023-12-24 02:28:25,868:DEBUG:certbot._internal.plugins.selection:Selected authenticator <certbot._internal.plugins.manual.Authenticator object at 0x7fe6884a1360> and installer None
+2023-12-24 02:28:25,868:INFO:certbot._internal.plugins.selection:Plugins selected: Authenticator manual, Installer None
+2023-12-24 02:28:35,546:DEBUG:acme.client:Sending GET request to https://acme-staging-v02.api.letsencrypt.org/directory.
+2023-12-24 02:28:35,548:DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): acme-staging-v02.api.letsencrypt.org:443
+2023-12-24 02:28:36,191:DEBUG:urllib3.connectionpool:https://acme-staging-v02.api.letsencrypt.org:443 "GET /directory HTTP/1.1" 200 826
+2023-12-24 02:28:36,192:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Sun, 24 Dec 2023 02:28:36 GMT
+Content-Type: application/json
+Content-Length: 826
+Connection: keep-alive
+Cache-Control: public, max-age=0, no-cache
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "DfS4R-CB5o8": "https://community.letsencrypt.org/t/adding-random-entries-to-the-directory/33417",
+  "keyChange": "https://acme-staging-v02.api.letsencrypt.org/acme/key-change",
+  "meta": {
+    "caaIdentities": [
+      "letsencrypt.org"
+    ],
+    "termsOfService": "https://letsencrypt.org/documents/LE-SA-v1.3-September-21-2022.pdf",
+    "website": "https://letsencrypt.org/docs/staging-environment/"
+  },
+  "newAccount": "https://acme-staging-v02.api.letsencrypt.org/acme/new-acct",
+  "newNonce": "https://acme-staging-v02.api.letsencrypt.org/acme/new-nonce",
+  "newOrder": "https://acme-staging-v02.api.letsencrypt.org/acme/new-order",
+  "renewalInfo": "https://acme-staging-v02.api.letsencrypt.org/draft-ietf-acme-ari-01/renewalInfo/",
+  "revokeCert": "https://acme-staging-v02.api.letsencrypt.org/acme/revoke-cert"
+}
+2023-12-24 02:28:39,361:DEBUG:acme.client:Requesting fresh nonce
+2023-12-24 02:28:39,368:DEBUG:acme.client:Sending HEAD request to https://acme-staging-v02.api.letsencrypt.org/acme/new-nonce.
+2023-12-24 02:28:39,662:DEBUG:urllib3.connectionpool:https://acme-staging-v02.api.letsencrypt.org:443 "HEAD /acme/new-nonce HTTP/1.1" 200 0
+2023-12-24 02:28:39,663:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Sun, 24 Dec 2023 02:28:39 GMT
+Connection: keep-alive
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-staging-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: rk02RH96RTLTQwE9hfsKzdl0u-Ol6hUxDc2poptoQuuquuLRghI
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+
+2023-12-24 02:28:39,663:DEBUG:acme.client:Storing nonce: rk02RH96RTLTQwE9hfsKzdl0u-Ol6hUxDc2poptoQuuquuLRghI
+2023-12-24 02:28:39,664:DEBUG:acme.client:JWS payload:
+b'{\n  "termsOfServiceAgreed": true\n}'
+2023-12-24 02:28:39,676:DEBUG:acme.client:Sending POST request to https://acme-staging-v02.api.letsencrypt.org/acme/new-acct:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAiandrIjogeyJuIjogIjVVaEExVlhxamxlTmYyVEUtaDVGTEhWUDdIcWVndDViR0pwTm5JWVpLd3NNS0ZRUkROcFJlbE9iN1Z4S0E4NnRIckxsVXBQVnRJT0RTVFBhNTBPSmdselpxc3ZsRWZTYno2a3R6a3dpTUs5VlFkRGpqbUZlZ29Teml2MF9fTTgyVDcyWW9IUW5xOXBVNE0tMFBfYXFoQnRsTjBlaWI2Q3JIdEc2aU1qbGNtYVJqZ3VHajZCMlN4ZXBSaUVOZ056OWtVQm1WYS13eDhnZzFpUGtJMzdXUzI4bzgtcUE0R0U3X2g2WjZ4QzNUcFA1bW5aMDkxR2lsb2FRZUVaTTlWVDh1YzBicHctdGVrVWhrUGhRV2dnWjNjS1ZMdUhqd0E3d2Z1V2NGcjZFWXZJLXNEZFZodDZuSFVnLVFTV0RKZ0lreFdJeTFxWjNZVUNXVFd6eG14eTVWUSIsICJlIjogIkFRQUIiLCAia3R5IjogIlJTQSJ9LCAibm9uY2UiOiAicmswMlJIOTZSVExUUXdFOWhmc0t6ZGwwdS1PbDZoVXhEYzJwb3B0b1F1dXF1dUxSZ2hJIiwgInVybCI6ICJodHRwczovL2FjbWUtc3RhZ2luZy12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL25ldy1hY2N0In0",
+  "signature": "kZZFlz23G4DeqFyDC1jX1rVBr0Z5aqbGLz2PkGZK45A8TNvHLJ8Bq1zFQQCAb5sr89jxFkXlfnsDcotOsv4AT8zDcIikwGl7aHi3uoYFsVfZuu4OLXjLk7tTjcFwtm74piL1sRttbaHaehVs3TcDAgy9ezrIT-0gIOBjMs8ZyqrdEe2LbrgQbwsu3rkFdBgow-vGYI2U8WZiQlB6lu7EuTBabC9ivOqCd8vIe4z5m2evSzXOsqUjDmTv1ViGQWwrlazIeeU90GEbtoeESsEObuIts-p8EdaM1eBz7xAFf-l7o2zu_dGVg_0S1sZokmCxCdHs7SPtIUSJEbb3kCm30w",
+  "payload": "ewogICJ0ZXJtc09mU2VydmljZUFncmVlZCI6IHRydWUKfQ"
+}
+2023-12-24 02:28:39,933:DEBUG:urllib3.connectionpool:https://acme-staging-v02.api.letsencrypt.org:443 "POST /acme/new-acct HTTP/1.1" 201 508
+2023-12-24 02:28:39,934:DEBUG:acme.client:Received response:
+HTTP 201
+Server: nginx
+Date: Sun, 24 Dec 2023 02:28:39 GMT
+Content-Type: application/json
+Content-Length: 508
+Connection: keep-alive
+Boulder-Requester: 130023714
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-staging-v02.api.letsencrypt.org/directory>;rel="index", <https://letsencrypt.org/documents/LE-SA-v1.3-September-21-2022.pdf>;rel="terms-of-service"
+Location: https://acme-staging-v02.api.letsencrypt.org/acme/acct/130023714
+Replay-Nonce: rk02RH96i3zKbi8qYrSUgyQ4rm8kdu2A-BEA4N-oMha9YMmHXCY
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "key": {
+    "kty": "RSA",
+    "n": "5UhA1VXqjleNf2TE-h5FLHVP7Hqegt5bGJpNnIYZKwsMKFQRDNpRelOb7VxKA86tHrLlUpPVtIODSTPa50OJglzZqsvlEfSbz6ktzkwiMK9VQdDjjmFegoSziv0__M82T72YoHQnq9pU4M-0P_aqhBtlN0eib6CrHtG6iMjlcmaRjguGj6B2SxepRiENgNz9kUBmVa-wx8gg1iPkI37WS28o8-qA4GE7_h6Z6xC3TpP5mnZ091GiloaQeEZM9VT8uc0bpw-tekUhkPhQWggZ3cKVLuHjwA7wfuWcFr6EYvI-sDdVht6nHUg-QSWDJgIkxWIy1qZ3YUCWTWzxmxy5VQ",
+    "e": "AQAB"
+  },
+  "initialIp": "186.79.88.162",
+  "createdAt": "2023-12-24T02:28:39.83442235Z",
+  "status": "valid"
+}
+2023-12-24 02:28:39,934:DEBUG:acme.client:Storing nonce: rk02RH96i3zKbi8qYrSUgyQ4rm8kdu2A-BEA4N-oMha9YMmHXCY
+2023-12-24 02:28:39,943:DEBUG:certbot._internal.display.obj:Notifying user: Account registered.
+2023-12-24 02:28:39,943:DEBUG:certbot._internal.main:Picked account: <Account(RegistrationResource(body=Registration(key=JWKRSA(key=<ComparableRSAKey(<cryptography.hazmat.backends.openssl.rsa._RSAPublicKey object at 0x7fe688256f20>)>), contact=(), agreement=None, status='valid', terms_of_service_agreed=None, only_return_existing=None, external_account_binding=None), uri='https://acme-staging-v02.api.letsencrypt.org/acme/acct/130023714', new_authzr_uri=None, terms_of_service='https://letsencrypt.org/documents/LE-SA-v1.3-September-21-2022.pdf'), ecfe1b27d26ddc637442b14609640bf2, Meta(creation_dt=datetime.datetime(2023, 12, 24, 2, 28, 39, tzinfo=<UTC>), creation_host='f8abd9c6bf6e', register_to_eff=None))>
+2023-12-24 02:28:39,944:DEBUG:certbot._internal.display.obj:Notifying user: Simulating a certificate request for pokeslots.ladisco.tech
+2023-12-24 02:28:39,950:DEBUG:acme.client:JWS payload:
+b'{\n  "identifiers": [\n    {\n      "type": "dns",\n      "value": "pokeslots.ladisco.tech"\n    }\n  ]\n}'
+2023-12-24 02:28:39,952:DEBUG:acme.client:Sending POST request to https://acme-staging-v02.api.letsencrypt.org/acme/new-order:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS1zdGFnaW5nLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC8xMzAwMjM3MTQiLCAibm9uY2UiOiAicmswMlJIOTZpM3pLYmk4cVlyU1VneVE0cm04a2R1MkEtQkVBNE4tb01oYTlZTW1IWENZIiwgInVybCI6ICJodHRwczovL2FjbWUtc3RhZ2luZy12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL25ldy1vcmRlciJ9",
+  "signature": "rP7y4JTkkI0xUy8xISwM_chQTsJTcNny4acP3XtI792N1E5cqZHgvUTZMM_3mb0UPsQEDiEnJ7P0VDzBGi9tcMF5RDQtdUl3--hh600SPK7GVEuM1C1ZO9zzHAw8VKelL-Dfc4ofYaHeFvPi5g4zXb8UMEAuWgdgOwqzRXHjAaOJD2uaZ60CsulGTZ3s_xUN4ij6n33rjXX7xBwIJfOctzNLTB83L9mFiXwZSbPWe8YOL24JASqk5KDpo3MJi_y08My3Yw67HNleA_SRVE-KShEkLJye9ElBIuAN2evrzQhA31HattEJv_p472gBGuQv5Nad6WY3aoyPDZVvSdr0og",
+  "payload": "ewogICJpZGVudGlmaWVycyI6IFsKICAgIHsKICAgICAgInR5cGUiOiAiZG5zIiwKICAgICAgInZhbHVlIjogInBva2VzbG90cy5sYWRpc2NvLnRlY2giCiAgICB9CiAgXQp9"
+}
+2023-12-24 02:28:40,287:DEBUG:urllib3.connectionpool:https://acme-staging-v02.api.letsencrypt.org:443 "POST /acme/new-order HTTP/1.1" 201 361
+2023-12-24 02:28:40,288:DEBUG:acme.client:Received response:
+HTTP 201
+Server: nginx
+Date: Sun, 24 Dec 2023 02:28:40 GMT
+Content-Type: application/json
+Content-Length: 361
+Connection: keep-alive
+Boulder-Requester: 130023714
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-staging-v02.api.letsencrypt.org/directory>;rel="index"
+Location: https://acme-staging-v02.api.letsencrypt.org/acme/order/130023714/13171513444
+Replay-Nonce: mMpbWOlLCSlmAyI6MxInY5Uz0EsbT9ZJAIdlBtdE2Qccakm2UWA
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "status": "pending",
+  "expires": "2023-12-31T02:28:40Z",
+  "identifiers": [
+    {
+      "type": "dns",
+      "value": "pokeslots.ladisco.tech"
+    }
+  ],
+  "authorizations": [
+    "https://acme-staging-v02.api.letsencrypt.org/acme/authz-v3/10218416074"
+  ],
+  "finalize": "https://acme-staging-v02.api.letsencrypt.org/acme/finalize/130023714/13171513444"
+}
+2023-12-24 02:28:40,288:DEBUG:acme.client:Storing nonce: mMpbWOlLCSlmAyI6MxInY5Uz0EsbT9ZJAIdlBtdE2Qccakm2UWA
+2023-12-24 02:28:40,290:DEBUG:acme.client:JWS payload:
+b''
+2023-12-24 02:28:40,293:DEBUG:acme.client:Sending POST request to https://acme-staging-v02.api.letsencrypt.org/acme/authz-v3/10218416074:
+{
+  "protected": "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogImh0dHBzOi8vYWNtZS1zdGFnaW5nLXYwMi5hcGkubGV0c2VuY3J5cHQub3JnL2FjbWUvYWNjdC8xMzAwMjM3MTQiLCAibm9uY2UiOiAibU1wYldPbExDU2xtQXlJNk14SW5ZNVV6MEVzYlQ5WkpBSWRsQnRkRTJRY2Nha20yVVdBIiwgInVybCI6ICJodHRwczovL2FjbWUtc3RhZ2luZy12MDIuYXBpLmxldHNlbmNyeXB0Lm9yZy9hY21lL2F1dGh6LXYzLzEwMjE4NDE2MDc0In0",
+  "signature": "B31yILOp0RmL2dqbdIEFZ4RC9PauUP6W4Y4zSAftZhaKk3oiAP_PQxUAuJdOuheqJveY7fDh_ausk2OZh1tdiMc1FrkaxGX9k1VqhZC5gpcRHnL7vVm3emnklcqC461cJLq-JUhhc9oFL1mRZlIYz3jq9kyjz10hxnCTwm8-QZnohgOsIIZ9E-DXaP4uE2JsHj-oL94Swl60cLCdBLSpL_b_M9Ji0p5D5_2IVXx0ROc6ewR3uqWrAzHiRkJ2LyVt9y9pRQFH-sz68H6YQiNmqwF1VDVOB0ZgSuBiwugpUJns_1X0hnuWHPt7Q5I3pNDIQHajX7KajJpFHjCK_QkHNw",
+  "payload": ""
+}
+2023-12-24 02:28:40,697:DEBUG:urllib3.connectionpool:https://acme-staging-v02.api.letsencrypt.org:443 "POST /acme/authz-v3/10218416074 HTTP/1.1" 200 827
+2023-12-24 02:28:40,698:DEBUG:acme.client:Received response:
+HTTP 200
+Server: nginx
+Date: Sun, 24 Dec 2023 02:28:40 GMT
+Content-Type: application/json
+Content-Length: 827
+Connection: keep-alive
+Boulder-Requester: 130023714
+Cache-Control: public, max-age=0, no-cache
+Link: <https://acme-staging-v02.api.letsencrypt.org/directory>;rel="index"
+Replay-Nonce: rk02RH96CTRJ3zJmr0h5YG0UW7AoDO-QayyWuTAbmhkudK2sHMM
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=604800
+
+{
+  "identifier": {
+    "type": "dns",
+    "value": "pokeslots.ladisco.tech"
+  },
+  "status": "pending",
+  "expires": "2023-12-31T02:28:40Z",
+  "challenges": [
+    {
+      "type": "http-01",
+      "status": "pending",
+      "url": "https://acme-staging-v02.api.letsencrypt.org/acme/chall-v3/10218416074/Ft-D9Q",
+      "token": "_2jpQEPKThK217XiMjKcCOOJUpJDwwzO_GGKksfTCAM"
+    },
+    {
+      "type": "dns-01",
+      "status": "pending",
+      "url": "https://acme-staging-v02.api.letsencrypt.org/acme/chall-v3/10218416074/NUSCqw",
+      "token": "_2jpQEPKThK217XiMjKcCOOJUpJDwwzO_GGKksfTCAM"
+    },
+    {
+      "type": "tls-alpn-01",
+      "status": "pending",
+      "url": "https://acme-staging-v02.api.letsencrypt.org/acme/chall-v3/10218416074/zGcwww",
+      "token": "_2jpQEPKThK217XiMjKcCOOJUpJDwwzO_GGKksfTCAM"
+    }
+  ]
+}
+2023-12-24 02:28:40,698:DEBUG:acme.client:Storing nonce: rk02RH96CTRJ3zJmr0h5YG0UW7AoDO-QayyWuTAbmhkudK2sHMM
+2023-12-24 02:28:40,699:INFO:certbot._internal.auth_handler:Performing the following challenges:
+2023-12-24 02:28:40,699:INFO:certbot._internal.auth_handler:dns-01 challenge for pokeslots.ladisco.tech
+2023-12-24 02:28:40,700:DEBUG:certbot._internal.display.obj:Notifying user: Please deploy a DNS TXT record under the name:
+
+_acme-challenge.pokeslots.ladisco.tech.
+
+with the following value:
+
+IHijtyIIfMAYViu60e2oJj8B--xLUPygLMz9ecJO9Dk
+
+Before continuing, verify the TXT record has been deployed. Depending on the DNS
+provider, this may take some time, from a few seconds to multiple minutes. You can
+check if it has finished deploying with aid of online tools, such as the Google
+Admin Toolbox: https://toolbox.googleapps.com/apps/dig/#TXT/_acme-challenge.pokeslots.ladisco.tech.
+Look for one or more bolded line(s) below the line ';ANSWER'. It should show the
+value(s) you've just added.
+
+2023-12-24 02:29:09,216:DEBUG:certbot._internal.error_handler:Encountered exception:
+Traceback (most recent call last):
+  File "/opt/certbot/src/certbot/certbot/_internal/auth_handler.py", line 88, in handle_authorizations
+    resps = self.auth.perform(achalls)
+  File "/opt/certbot/src/certbot/certbot/_internal/plugins/manual.py", line 187, in perform
+    self._perform_achall_manually(achall, i == last_dns_achall)
+  File "/opt/certbot/src/certbot/certbot/_internal/plugins/manual.py", line 237, in _perform_achall_manually
+    display_util.notification(msg, wrap=False, force_interactive=True)
+  File "/opt/certbot/src/certbot/certbot/display/util.py", line 52, in notification
+    obj.get_display().notification(message, pause=pause, wrap=wrap,
+  File "/opt/certbot/src/certbot/certbot/_internal/display/obj.py", line 89, in notification
+    util.input_with_timeout("Press Enter to Continue")
+  File "/opt/certbot/src/certbot/certbot/_internal/display/util.py", line 65, in input_with_timeout
+    line = misc.readline_with_timeout(timeout, prompt)
+  File "/opt/certbot/src/certbot/certbot/compat/misc.py", line 79, in readline_with_timeout
+    rlist, _, _ = select.select([sys.stdin], [], [], timeout)
+KeyboardInterrupt
+
+2023-12-24 02:29:09,216:DEBUG:certbot._internal.error_handler:Calling registered functions
+2023-12-24 02:29:09,216:INFO:certbot._internal.auth_handler:Cleaning up challenges
+2023-12-24 02:29:09,216:ERROR:certbot._internal.log:Exiting due to user request.

@@ -18,3 +18,9 @@ services:
     container_name: nginx
     depends_on:
       - app
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./etc-letsencrypt:/etc/letsencrypt
+      - ./var-lib-letsencrypt:/var/lib/letsencrypt
+      - ./var-log-letsencrypt:/var/log/letsencrypt
