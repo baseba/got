@@ -4,9 +4,10 @@ package slotView
 import (
     "fmt"
 
+
     "github.com/baseba/got/view/layout"
     )
-templ Show(room string) {
+templ Show(room string, money string, count string) {
     @layout.Base(){
         <h1>slors</h1>
         <h1> {room}</h1>
@@ -55,9 +56,9 @@ templ Show(room string) {
         <div class="flex flex-col space-y-2 md:space-y-0 md:space-x-2 mt-4">
             <div id="status" class="bg-[#f3f4f6] p-4 rounded-md shadow-md">
                 <p class="text-sm text-gray-500 mb-1">Perdidas Seguidas</p>
-                <p id="count" class="text-sm text-gray-500 mb-1">0</p>
+                <p id="count" class="text-sm text-gray-500 mb-1">{ count}</p>
                 <p class="text-sm text-gray-500 mb-1">saldo</p>
-                <p id="money" class="text-lg text-black">0</p>
+                <p id="money" class="text-lg text-black">{ money }</p>
                 <h2>
                     nivel de calor de la maquina
                 </h2>

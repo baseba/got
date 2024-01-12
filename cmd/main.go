@@ -58,7 +58,12 @@ func main() {
 	userHandler := handler.UserHandler{}
 	app.GET("/user", userHandler.HandleUserShow)
 	slotsHandler := handler.SlotsHandler{}
-	app.GET("/slots/:room", slotsHandler.HandleSlotsShow)
+	app.GET("/slots/:room", func(c echo.Context) error {
+		room := c.Param("room")
+		database := client.Database("pokeslots")
+		return slotsHandler.HandleSlotsShow(c, room, database)
+
+	})
 	indexHandler := handler.IndexHandler{}
 	app.GET("/", indexHandler.HandleIndexShow)
 
